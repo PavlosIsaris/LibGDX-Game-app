@@ -1,4 +1,4 @@
-package helpers;
+package org.scify.libgdxgame.helpers;
 
 public class GameInfo {
 

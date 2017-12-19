@@ -2,9 +2,9 @@ package org.scify.libgdxgame.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import org.scify.libgdxgame.GameMain;
+import org.scify.libgdxgame.game.GameMain;
 
-import helpers.GameInfo;
+import org.scify.libgdxgame.helpers.GameInfo;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
