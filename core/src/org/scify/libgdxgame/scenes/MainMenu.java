@@ -1,6 +1,7 @@
 package org.scify.libgdxgame.scenes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -44,7 +45,7 @@ public class MainMenu implements Screen{
 
         // position the player at the center and slightly upwards
         player = new DynamicSprite(world, "Player 1.png", GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f + 250);
-        cloud = new StaticSprite(world, "Cloud 1.png", GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f - 130);
+        cloud = new StaticSprite(world, "Cloud 1.png", GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f);
     }
 
     private void initCamera() {
@@ -61,8 +62,24 @@ public class MainMenu implements Screen{
 
     }
 
+    void inputHandler(float deltaTime) {
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            // apply a "left side" force to the player's body
+            // last parameter allows "sleeping" bodies to be awoken in order to be moved
+            player.getBody().applyLinearImpulse(new Vector2(-0.1f, 0), player.getBody().getWorldCenter(), true);
+        } else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            player.getBody().applyLinearImpulse(new Vector2(+0.1f, 0), player.getBody().getWorldCenter(), true);
+        } else if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            player.getBody().applyLinearImpulse(new Vector2(0, -0.1f), player.getBody().getWorldCenter(), true);
+        } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            player.getBody().applyLinearImpulse(new Vector2(0, +0.1f), player.getBody().getWorldCenter(), true);
+        }
+    }
+
     @Override
     public void render(float delta) {
+
+        inputHandler(delta);
 
         player.updatePosition();
         cloud.updatePosition();
@@ -75,7 +92,7 @@ public class MainMenu implements Screen{
         // draw the player
         // set the Y axis relative to the player body
         game.getBatch().draw(player, player.getX(), player.getY() - player.getHeight() / 2f);
-        game.getBatch().draw(cloud, cloud.getX(), cloud.getY() - cloud.getHeight() / 2f);
+        game.getBatch().draw(cloud, cloud.getX() - cloud.getWidth() / 2f + 40, cloud.getY() - cloud.getHeight() / 2f);
         game.getBatch().end();
 
         debugRenderer.render(world, camera.combined);

@@ -55,4 +55,8 @@ public class GameSprite extends Sprite implements Drawable {
     public void updatePosition() {
         this.setPosition(body.getPosition().x * GameInfo.PPM, body.getPosition().y * GameInfo.PPM);
     }
+
+    public Body getBody() {
+        return body;
+    }
 }
