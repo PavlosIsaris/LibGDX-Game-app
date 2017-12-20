@@ -17,10 +17,13 @@ public class GameSprite extends Sprite implements Drawable {
 
     protected World world;
     protected Body body;
+    protected String spriteId;
+    protected BodyDef.BodyType bodyType;
 
-    public GameSprite(World world, String imgPath, float x, float y) {
+    public GameSprite(World world, String spriteId, String imgPath, float x, float y) {
         super(new Texture(imgPath));
         this.world = world;
+        this.spriteId = spriteId;
         setPosition(x - getWidth() / 2f, y - getHeight() / 2f);
     }
 
@@ -31,14 +34,17 @@ public class GameSprite extends Sprite implements Drawable {
         // a kinematic body is not affected by gravity but it is affected by other forces
         // a dynamic body is affected by gravity and any other force
         bodyDef.type = bodyType;
+        this.bodyType = bodyType;
         // using the custom pixel per meter ratio
-        bodyDef.position.set(getX() / GameInfo.PPM, getY() / GameInfo.PPM);
+        bodyDef.position.set((getX() - 45) / GameInfo.PPM,
+                getY() / GameInfo.PPM);
 
         body = world.createBody(bodyDef);
 
         // create an invisible "box" around the player in order to react with the other world objects
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox((getWidth() / 2) / GameInfo.PPM, (getHeight() / 2) / GameInfo.PPM);
+        shape.setAsBox((getWidth() / 2 - 25) / GameInfo.PPM,
+                (getHeight() / 2 - 10) / GameInfo.PPM);
 
         // create a fixture to assign the body to the shape
         FixtureDef fixtureDef = new FixtureDef();
@@ -47,8 +53,14 @@ public class GameSprite extends Sprite implements Drawable {
         fixtureDef.density = 1f;
 
         Fixture fixture = body.createFixture(fixtureDef);
-
+        fixture.setUserData(spriteId);
         shape.dispose();
+    }
+
+    @Override
+    public void setSpritePosition(float x, float y) {
+        setPosition(x, y);
+        createBody(bodyType);
     }
 
     @Override
