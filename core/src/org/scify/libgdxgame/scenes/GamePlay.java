@@ -74,6 +74,10 @@ public class GamePlay implements Screen, ContactListener {
     private void createSprites() {
         // position the player at the center and slightly upwards
         player = new DynamicSprite(world, "player_1", "Player/Player 1.png", GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f + 250);
+        createRepeatableSprites();
+    }
+
+    private void createRepeatableSprites() {
         cloudsController.createClouds();
     }
 

@@ -27,6 +27,10 @@ public class GameSprite extends Sprite implements Drawable {
         setPosition(x - getWidth() / 2f, y - getHeight() / 2f);
     }
 
+    public String getSpriteId() {
+        return spriteId;
+    }
+
     protected void createBody(BodyDef.BodyType bodyType) {
         BodyDef bodyDef = new BodyDef();
 
