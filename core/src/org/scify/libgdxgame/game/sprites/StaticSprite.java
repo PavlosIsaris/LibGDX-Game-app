@@ -8,6 +8,6 @@ public class StaticSprite extends GameSprite {
 
     public StaticSprite(World world, String id, String imgName, float x, float y) {
         super(world, id, imgName, x, y);
-        createBody(BodyDef.BodyType.StaticBody);
+        setBodyType(BodyDef.BodyType.StaticBody);
     }
 }

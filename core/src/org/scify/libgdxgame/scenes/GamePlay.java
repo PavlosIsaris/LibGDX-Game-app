@@ -43,9 +43,6 @@ public class GamePlay implements Screen, ContactListener {
         cloudsController = new CloudsController(world);
         this.initCamera();
         this.createSprites();
-        // box2D (the physics engine) initially uses a 1 / 1 as pixel / meter ratio
-        // so if an image is 80x80 pixels, it translates to 80x80 meters in the physics engine
-        // the solution for that is to create a custom pixel to meter ratio in @see GameInfo class
     }
 
     private void initCamera() {
@@ -151,7 +148,7 @@ public class GamePlay implements Screen, ContactListener {
         drawSprites();
         game.getBatch().end();
 
-        debugRenderer.render(world, mainCamera.combined);
+        debugRenderer.render(world, box2DCamera.combined);
         game.getBatch().setProjectionMatrix(mainCamera.combined);
         mainCamera.update();
         // how many times to calculate physics in a second

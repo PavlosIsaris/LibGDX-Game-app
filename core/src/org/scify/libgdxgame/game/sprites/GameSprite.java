@@ -43,8 +43,8 @@ public class GameSprite extends Sprite implements Drawable {
 
         // create an invisible "box" around the player in order to react with the other world objects
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox((getWidth() / 2 - 25) / GameInfo.PPM,
-                (getHeight() / 2 - 10) / GameInfo.PPM);
+        shape.setAsBox((getWidth() / 2 ) / GameInfo.PPM,
+                (getHeight() / 2 ) / GameInfo.PPM);
 
         // create a fixture to assign the body to the shape
         FixtureDef fixtureDef = new FixtureDef();
@@ -55,6 +55,10 @@ public class GameSprite extends Sprite implements Drawable {
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData(spriteId);
         shape.dispose();
+    }
+
+    public void setBodyType(BodyDef.BodyType bodyType) {
+        this.bodyType = bodyType;
     }
 
     @Override

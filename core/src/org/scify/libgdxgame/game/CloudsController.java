@@ -11,7 +11,7 @@ public class CloudsController {
 
     private World world;
     private Array<StaticSprite> clouds = new Array<StaticSprite>();
-    private final float DISTANCE_BETWEEN_CLOUDS = 250f;
+    private static final float DISTANCE_BETWEEN_CLOUDS = 250f;
 
     public CloudsController(World world) {
         this.world = world;
@@ -34,7 +34,7 @@ public class CloudsController {
         positionClouds();
     }
 
-    public void positionClouds() {
+    private void positionClouds() {
         float tempX = GameInfo.HEIGHT / 2f;
         float positionY = GameInfo.WIDTH / 2f;
 
