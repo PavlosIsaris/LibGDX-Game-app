@@ -12,9 +12,13 @@ public class CloudsController {
     private World world;
     private Array<StaticSprite> clouds = new Array<StaticSprite>();
     private static final float DISTANCE_BETWEEN_CLOUDS = 250f;
+    // these variables are helpers for randomizing the position of the clouds in the X axis
+    private float minX, maxX;
 
     public CloudsController(World world) {
         this.world = world;
+        minX = GameInfo.WIDTH / 2f - 110;
+        maxX = GameInfo.WIDTH / 2f + 110;
     }
 
     public void createClouds() {
@@ -35,7 +39,7 @@ public class CloudsController {
     }
 
     private void positionClouds() {
-        float tempX = GameInfo.HEIGHT / 2f;
+        float tempX = GameInfo.WIDTH / 2f;
         float positionY = GameInfo.WIDTH / 2f;
 
         for(StaticSprite cloud : clouds) {
