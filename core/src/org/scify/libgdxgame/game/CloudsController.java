@@ -15,11 +15,16 @@ public class CloudsController {
     private static final float DISTANCE_BETWEEN_CLOUDS = 250f;
     // these variables are helpers for randomizing the position of the clouds in the X axis
     private float minX, maxX;
+    private float cameraY;
 
     public CloudsController(World world) {
         this.world = world;
         minX = GameInfo.WIDTH / 2f - 110;
         maxX = GameInfo.WIDTH / 2f + 110;
+    }
+
+    public void setCameraY(float cameraY) {
+        this.cameraY = cameraY;
     }
 
     public void createClouds() {
@@ -70,6 +75,25 @@ public class CloudsController {
     public void drawClouds(SpriteBatch batch) {
         for(StaticSprite cloud : clouds) {
             batch.draw(cloud, cloud.getX() - cloud.getWidth() / 2f, cloud.getY() - cloud.getHeight() / 2f);
+        }
+    }
+
+    public void createAndArrangeNewClouds() {
+        // delete all clouds that have already passed from
+        // the screen and are no longer visible
+        for(int i = 0; i< clouds.size; i++) {
+            if((clouds.get(i).getY() - GameInfo.HEIGHT / 2) > cameraY) {
+                clouds.get(i).getTexture().dispose();
+                clouds.removeIndex(i);
+            }
+        }
+
+        // if the remaining clouds are 4
+        // create more clouds
+        if(clouds.size == 4) {
+            createClouds();
+
+            positionClouds();
         }
     }
 }

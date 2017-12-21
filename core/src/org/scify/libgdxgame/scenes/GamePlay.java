@@ -110,6 +110,10 @@ public class GamePlay implements Screen, ContactListener {
     void update(float deltaTime) {
         moveCamera();
         checkBackgroundsOutOfBounds();
+
+        // todo refactor using observer pattern
+        cloudsController.setCameraY(mainCamera.position.y);
+        cloudsController.createAndArrangeNewClouds();
     }
 
     private void moveCamera() {
