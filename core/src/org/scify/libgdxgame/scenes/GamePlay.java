@@ -78,7 +78,7 @@ public class GamePlay implements Screen, ContactListener {
     }
 
     private void createRepeatableSprites() {
-        cloudsController.createClouds();
+        cloudsController.initializeClouds();
     }
 
     private void createBackgrounds() {

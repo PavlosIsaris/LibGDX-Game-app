@@ -15,6 +15,7 @@ public class CloudsController {
     private static final float DISTANCE_BETWEEN_CLOUDS = 250f;
     // these variables are helpers for randomizing the position of the clouds in the X axis
     private float minX, maxX;
+    private float lastCloudPositionY;
     private float cameraY;
 
     public CloudsController(World world) {
@@ -23,52 +24,69 @@ public class CloudsController {
         maxX = GameInfo.WIDTH / 2f + 110;
     }
 
+    public void initializeClouds() {
+        createClouds();
+        positionClouds(true);
+    }
+
     public void setCameraY(float cameraY) {
         this.cameraY = cameraY;
     }
 
-    public void createClouds() {
+    private void createClouds() {
         for(int i = 0; i < 2; i ++) {
-            clouds.add(new StaticSprite(world, "dark_cloud_" + i, "Clouds/Dark Cloud.png", GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f));
+            clouds.add(new StaticSprite(world, "dark_cloud_" + i, "Clouds/Dark Cloud.png", 0, 0));
         }
 
         int index = 1;
         for(int i = 0; i < 6; i ++) {
-            clouds.add(new StaticSprite(world, "cloud_" + i, "Clouds/Cloud " + index + ".png", GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f));
+            clouds.add(new StaticSprite(world, "cloud_" + i, "Clouds/Cloud " + index + ".png", 0, 0));
             index++;
             if(index == 4)
                 index = 1;
         }
 
         clouds.shuffle();
-        positionClouds();
-    }
-
-    private void positionClouds() {
         // first cloud must not be a "dark cloud"
         while (clouds.get(0).getSpriteId().startsWith("dark_cloud_")) {
             clouds.shuffle();
         }
+    }
 
-        float positionY = GameInfo.WIDTH / 2f;
+    private void positionClouds(boolean firstTimeArranging) {
+
+        float positionY;
+        if(firstTimeArranging) {
+            // starting position is the center of the screen
+            positionY = GameInfo.HEIGHT / 2f;
+        } else {
+            positionY = lastCloudPositionY;
+        }
+
         int controlX = 0;
         for(StaticSprite cloud : clouds) {
-            float tempX = 0;
 
-            // if controlX is 0, position at right side
-            // else, to the left side
-            if(controlX == 0) {
-                tempX = Utils.randomBetweenNumbers(maxX - 60, maxX);
-                // on next iteration, position to the left
-                controlX = 1;
-            } else if (controlX == 1) {
-                tempX = Utils.randomBetweenNumbers(minX + 60, minX);
-                // on next iteration, position to the right
-                controlX = 0;
+            // wee need to position only the clouds that haven't been
+            // positioned yet (so their X and Y are 0)
+            if(cloud.getX() == 0 && cloud.getY() == 0) {
+                float tempX = 0;
+
+                // if controlX is 0, position at right side
+                // else, to the left side
+                if(controlX == 0) {
+                    tempX = Utils.randomBetweenNumbers(maxX - 60, maxX);
+                    // on next iteration, position to the left
+                    controlX = 1;
+                } else if (controlX == 1) {
+                    tempX = Utils.randomBetweenNumbers(minX + 60, minX);
+                    // on next iteration, position to the right
+                    controlX = 0;
+                }
+
+                cloud.setSpritePosition(tempX, positionY);
+                positionY -= DISTANCE_BETWEEN_CLOUDS;
+                lastCloudPositionY = positionY;
             }
-
-            cloud.setSpritePosition(tempX, positionY);
-            positionY -= DISTANCE_BETWEEN_CLOUDS;
         }
     }
 
@@ -82,7 +100,7 @@ public class CloudsController {
         // delete all clouds that have already passed from
         // the screen and are no longer visible
         for(int i = 0; i< clouds.size; i++) {
-            if((clouds.get(i).getY() - GameInfo.HEIGHT / 2) > cameraY) {
+            if((clouds.get(i).getY() - GameInfo.HEIGHT / 2 - 10) > cameraY) {
                 clouds.get(i).getTexture().dispose();
                 clouds.removeIndex(i);
             }
@@ -93,7 +111,7 @@ public class CloudsController {
         if(clouds.size == 4) {
             createClouds();
 
-            positionClouds();
+            positionClouds(false);
         }
     }
 }

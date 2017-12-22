@@ -24,7 +24,8 @@ public class GameSprite extends Sprite implements Drawable {
         super(new Texture(imgPath));
         this.world = world;
         this.spriteId = spriteId;
-        setPosition(x - getWidth() / 2f, y - getHeight() / 2f);
+        if(x != 0 && y != 0)
+            setPosition(x - getWidth() / 2f, y - getHeight() / 2f);
     }
 
     public String getSpriteId() {
