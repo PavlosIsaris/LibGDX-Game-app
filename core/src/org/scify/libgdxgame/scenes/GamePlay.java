@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import org.scify.libgdxgame.game.controllers.BackgroundsController;
 import org.scify.libgdxgame.game.controllers.CloudsController;
 import org.scify.libgdxgame.game.GameMain;
 import org.scify.libgdxgame.game.controllers.PlayerController;
@@ -26,13 +27,14 @@ import org.scify.libgdxgame.helpers.GameInfo;
 public class GamePlay implements Screen, ContactListener {
 
     private GameMain game;
-    private Sprite[] backgrounds;
-    private float lastYPosition;
+
+
     private World world;
     private OrthographicCamera mainCamera;
     private Viewport gameViewport;
     private OrthographicCamera box2DCamera;
     private Box2DDebugRenderer debugRenderer;
+    private BackgroundsController backgroundsController;
     private CloudsController cloudsController;
     private PlayerController playerController;
 
@@ -41,6 +43,7 @@ public class GamePlay implements Screen, ContactListener {
         this.createWorld();
         cloudsController = new CloudsController(world);
         playerController = new PlayerController(world);
+        backgroundsController = new BackgroundsController();
         this.initCamera();
         this.createSprites();
     }
@@ -76,38 +79,10 @@ public class GamePlay implements Screen, ContactListener {
         playerController.createPlayer();
         cloudsController.initializeClouds();
     }
-
-    private void createBackgrounds() {
-        backgrounds = new Sprite[3];
-
-        for(int i = 0; i < backgrounds.length; i++) {
-            backgrounds[i] = new Sprite(new Texture("Backgrounds/Game BG.png"));
-            backgrounds[i].setPosition(0, -(i * backgrounds[i].getHeight()));
-            lastYPosition = Math.abs(backgrounds[i].getY());
-        }
-    }
-
-    void checkBackgroundsOutOfBounds() {
-        for(Sprite background: backgrounds) {
-            if(background.getY() - background.getHeight() / 2f - 5 > mainCamera.position.y) {
-                float newPosition = background.getHeight() + lastYPosition;
-                background.setPosition(0, -newPosition);
-                lastYPosition = Math.abs(newPosition);
-            }
-        }
-    }
-
-    private void drawBackgrounds() {
-        for (Sprite background : backgrounds) {
-            game.getBatch().draw(background, background.getX(), background.getY());
-        }
-    }
-
     void update(float deltaTime) {
         moveCamera();
-        checkBackgroundsOutOfBounds();
-
         // todo refactor using observer pattern
+        backgroundsController.updateBackgrounds(mainCamera.position.y);
         cloudsController.setCameraY(mainCamera.position.y);
         cloudsController.createAndArrangeNewClouds();
         playerController.updatePlayerPosition();
@@ -132,7 +107,7 @@ public class GamePlay implements Screen, ContactListener {
 
     @Override
     public void show() {
-        createBackgrounds();
+        backgroundsController.createBackgrounds();
     }
 
     @Override
@@ -145,7 +120,7 @@ public class GamePlay implements Screen, ContactListener {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.getBatch().begin();
-        drawBackgrounds();
+        backgroundsController.drawBackgrounds(game.getBatch());
         drawSprites();
         game.getBatch().end();
 
