@@ -1,4 +1,4 @@
-package org.scify.libgdxgame.game;
+package org.scify.libgdxgame.game.controllers;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;

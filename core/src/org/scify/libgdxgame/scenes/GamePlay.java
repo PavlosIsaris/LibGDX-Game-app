@@ -18,11 +18,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import org.scify.libgdxgame.game.CloudsController;
+import org.scify.libgdxgame.game.controllers.CloudsController;
 import org.scify.libgdxgame.game.GameMain;
-import org.scify.libgdxgame.game.PlayerController;
-import org.scify.libgdxgame.game.sprites.DynamicSprite;
-import org.scify.libgdxgame.game.sprites.GameSprite;
+import org.scify.libgdxgame.game.controllers.PlayerController;
 import org.scify.libgdxgame.helpers.GameInfo;
 
 public class GamePlay implements Screen, ContactListener {

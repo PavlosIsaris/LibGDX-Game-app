@@ -1,4 +1,4 @@
-package org.scify.libgdxgame.game;
+package org.scify.libgdxgame.game.controllers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
