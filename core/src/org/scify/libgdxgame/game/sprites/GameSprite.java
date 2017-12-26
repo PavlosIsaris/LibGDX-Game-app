@@ -56,9 +56,11 @@ public class GameSprite extends Sprite implements Drawable {
         fixtureDef.shape = shape;
         // define the mass (density) for the fixture
         fixtureDef.density = 1f;
-
+        // make fixture not sliding on other surfaces
+        fixtureDef.friction = 2f;
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData(spriteId);
+        // free memory of shape
         shape.dispose();
     }
 

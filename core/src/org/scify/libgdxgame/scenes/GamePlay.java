@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import org.scify.libgdxgame.game.CloudsController;
 import org.scify.libgdxgame.game.GameMain;
+import org.scify.libgdxgame.game.PlayerController;
 import org.scify.libgdxgame.game.sprites.DynamicSprite;
 import org.scify.libgdxgame.game.sprites.GameSprite;
 import org.scify.libgdxgame.helpers.GameInfo;
@@ -29,18 +30,19 @@ public class GamePlay implements Screen, ContactListener {
     private GameMain game;
     private Sprite[] backgrounds;
     private float lastYPosition;
-    private GameSprite player;
     private World world;
     private OrthographicCamera mainCamera;
     private Viewport gameViewport;
     private OrthographicCamera box2DCamera;
     private Box2DDebugRenderer debugRenderer;
     private CloudsController cloudsController;
+    private PlayerController playerController;
 
     public GamePlay(GameMain game) {
         this.game = game;
         this.createWorld();
         cloudsController = new CloudsController(world);
+        playerController = new PlayerController(world);
         this.initCamera();
         this.createSprites();
     }
@@ -73,11 +75,7 @@ public class GamePlay implements Screen, ContactListener {
 
     private void createSprites() {
         // position the player at the center and slightly upwards
-        player = new DynamicSprite(world, "player_1", "Player/Player 1.png", GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f + 250);
-        createRepeatableSprites();
-    }
-
-    private void createRepeatableSprites() {
+        playerController.createPlayer();
         cloudsController.initializeClouds();
     }
 
@@ -114,6 +112,7 @@ public class GamePlay implements Screen, ContactListener {
         // todo refactor using observer pattern
         cloudsController.setCameraY(mainCamera.position.y);
         cloudsController.createAndArrangeNewClouds();
+        playerController.updatePlayerPosition();
     }
 
     private void moveCamera() {
@@ -122,16 +121,14 @@ public class GamePlay implements Screen, ContactListener {
 
     void inputHandler(float deltaTime) {
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            // apply a "left side" force to the player's body
-            // last parameter allows "sleeping" bodies to be awoken in order to be moved
-            player.getBody().applyForce(new Vector2(-5f, 0), player.getBody().getWorldCenter(), true);
+            playerController.movePlayerLEFT();
         } else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            player.getBody().applyForce(new Vector2(+5f, 0), player.getBody().getWorldCenter(), true);
+            playerController.movePlayerRIGHT();
         } else if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
             System.out.println("UP");
-            player.getBody().applyForce(new Vector2(0, -5f), player.getBody().getWorldCenter(), true);
+            playerController.movePlayerUP();
         } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            player.getBody().applyForce(new Vector2(0, +5f), player.getBody().getWorldCenter(), true);
+            playerController.movePlayerDOWN();
         }
     }
 
@@ -144,8 +141,6 @@ public class GamePlay implements Screen, ContactListener {
     public void render(float delta) {
         update(delta);
         inputHandler(delta);
-
-        player.updatePosition();
 
         // clear the screen
         Gdx.gl.glClearColor(1, 0, 0, 1);
@@ -167,9 +162,7 @@ public class GamePlay implements Screen, ContactListener {
     }
 
     private void drawSprites() {
-        // draw the player
-        // set the Y axis relative to the player body
-        game.getBatch().draw(player, player.getX(), player.getY() - player.getHeight() / 2f);
+        playerController.drawPlayer(game.getBatch());
         cloudsController.drawClouds(game.getBatch());
     }
 
