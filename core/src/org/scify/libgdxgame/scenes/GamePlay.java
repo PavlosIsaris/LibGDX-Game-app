@@ -24,6 +24,8 @@ import org.scify.libgdxgame.game.GameMain;
 import org.scify.libgdxgame.game.controllers.PlayerController;
 import org.scify.libgdxgame.helpers.GameInfo;
 
+import java.awt.geom.Point2D;
+
 public class GamePlay implements Screen, ContactListener {
 
     private GameMain game;
@@ -76,8 +78,9 @@ public class GamePlay implements Screen, ContactListener {
 
     private void createSprites() {
         // position the player at the center and slightly upwards
-        playerController.createPlayer();
         cloudsController.initializeClouds();
+        Point2D.Float firstCloudPosition = cloudsController.getCoordsOfFirstCloud();
+        playerController.createPlayer((float) firstCloudPosition.getX(), (float) firstCloudPosition.getY() + 100f);
     }
     void update(float deltaTime) {
         moveCamera();

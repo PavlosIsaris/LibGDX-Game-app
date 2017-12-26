@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import org.scify.libgdxgame.game.sprites.DynamicSprite;
 import org.scify.libgdxgame.helpers.GameInfo;
 
+import java.awt.geom.Point2D;
+
 public class PlayerController {
 
     private World world;
@@ -15,8 +17,8 @@ public class PlayerController {
         this.world = world;
     }
 
-    public void createPlayer() {
-        this.player = new DynamicSprite(world, "player_1", "Player/Player 1.png", GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f + 250);
+    public void createPlayer(float x, float y) {
+        this.player = new DynamicSprite(world, "player_1", "Player/Player 1.png", x, y);
     }
 
     public void drawPlayer(Batch batch) {

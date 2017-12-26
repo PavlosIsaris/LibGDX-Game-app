@@ -8,6 +8,9 @@ import org.scify.libgdxgame.game.sprites.StaticSprite;
 import org.scify.libgdxgame.helpers.GameInfo;
 import org.scify.libgdxgame.helpers.Utils;
 
+import java.awt.geom.Point2D;
+
+
 public class CloudsController {
     private static final float CLOUD_INITIAL_POSITION_X = 0;
     private static final float CLOUD_INITIAL_POSITION_Y = 0;
@@ -117,5 +120,9 @@ public class CloudsController {
 
             positionClouds(false);
         }
+    }
+
+    public Point2D.Float getCoordsOfFirstCloud() {
+        return new Point2D.Float(clouds.get(0).getX(), clouds.get(0).getY());
     }
 }
