@@ -1,18 +1,15 @@
 package org.scify.libgdxgame.game.controllers;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
 import org.scify.libgdxgame.game.sprites.DynamicSprite;
-import org.scify.libgdxgame.helpers.GameInfo;
-
-import java.awt.geom.Point2D;
 
 public class PlayerController {
 
     private World world;
     private DynamicSprite player;
+    private static final float PLAYER_MOVING_VELOCITY = 2f;
     public PlayerController(World world) {
         this.world = world;
     }
@@ -32,20 +29,18 @@ public class PlayerController {
     }
 
     public void movePlayerUP() {
-        player.getBody().applyForce(new Vector2(0, -5f), player.getBody().getWorldCenter(), true);
+        player.moveSpriteOnYAxis(-PLAYER_MOVING_VELOCITY);
     }
 
     public void movePlayerDOWN() {
-        player.getBody().applyForce(new Vector2(0, +5f), player.getBody().getWorldCenter(), true);
+        player.moveSpriteOnYAxis(PLAYER_MOVING_VELOCITY);
     }
 
     public void movePlayerLEFT() {
-        // apply a "left side" force to the player's body
-        // last parameter allows "sleeping" bodies to be awoken in order to be moved
-        player.getBody().applyForce(new Vector2(-5f, 0), player.getBody().getWorldCenter(), true);
+        player.moveSpriteOnXAxis(-PLAYER_MOVING_VELOCITY);
     }
 
     public void movePlayerRIGHT() {
-        player.getBody().applyForce(new Vector2(+5f, 0), player.getBody().getWorldCenter(), true);
+        player.moveSpriteOnXAxis(PLAYER_MOVING_VELOCITY);
     }
 }

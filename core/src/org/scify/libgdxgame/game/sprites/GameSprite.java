@@ -13,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import org.scify.libgdxgame.game.interfaces.Drawable;
 import org.scify.libgdxgame.helpers.GameInfo;
 
-public class GameSprite extends Sprite implements Drawable {
+public abstract class GameSprite extends Sprite implements Drawable {
 
     protected World world;
     protected Body body;

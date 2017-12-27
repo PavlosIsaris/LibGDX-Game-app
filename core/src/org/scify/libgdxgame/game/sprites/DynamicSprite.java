@@ -8,6 +8,14 @@ public class DynamicSprite extends GameSprite {
     public DynamicSprite(World world, String id, String imgName, float x, float y) {
         super(world, id, imgName, x, y);
         createBody(BodyDef.BodyType.DynamicBody);
+        body.setFixedRotation(true);
     }
 
+    public void moveSpriteOnXAxis(float x) {
+        body.setLinearVelocity(x, body.getLinearVelocity().y);
+    }
+
+    public void moveSpriteOnYAxis(float y) {
+        body.setLinearVelocity( body.getLinearVelocity().x, y);
+    }
 }

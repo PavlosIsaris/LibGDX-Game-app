@@ -83,7 +83,7 @@ public class GamePlay implements Screen, ContactListener {
         playerController.createPlayer((float) firstCloudPosition.getX(), (float) firstCloudPosition.getY() + 100f);
     }
     void update(float deltaTime) {
-        moveCamera();
+        //moveCamera();
         // todo refactor using observer pattern
         backgroundsController.updateBackgrounds(mainCamera.position.y);
         cloudsController.setCameraY(mainCamera.position.y);
