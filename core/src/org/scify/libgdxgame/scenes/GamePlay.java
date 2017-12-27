@@ -5,8 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -97,14 +95,19 @@ public class GamePlay implements Screen, ContactListener {
 
     void inputHandler(float deltaTime) {
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            playerController.setPlayerWalking(true);
             playerController.movePlayerLEFT();
         } else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            playerController.setPlayerWalking(true);
             playerController.movePlayerRIGHT();
         } else if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            System.out.println("UP");
+            playerController.setPlayerWalking(true);
             playerController.movePlayerUP();
         } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            playerController.setPlayerWalking(true);
             playerController.movePlayerDOWN();
+        } else {
+            playerController.setPlayerWalking(false);
         }
     }
 
@@ -138,7 +141,8 @@ public class GamePlay implements Screen, ContactListener {
     }
 
     private void drawSprites() {
-        playerController.drawPlayer(game.getBatch());
+        playerController.drawPlayerIdle(game.getBatch());
+        playerController.drawPlayerAnimation(game.getBatch());
         cloudsController.drawClouds(game.getBatch());
     }
 
