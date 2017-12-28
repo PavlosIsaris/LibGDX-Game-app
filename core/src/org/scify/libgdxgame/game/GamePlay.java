@@ -1,4 +1,4 @@
-package org.scify.libgdxgame.scenes;
+package org.scify.libgdxgame.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import org.scify.libgdxgame.game.controllers.BackgroundsController;
 import org.scify.libgdxgame.game.controllers.CloudsController;
-import org.scify.libgdxgame.game.GameMain;
+import org.scify.libgdxgame.GameMain;
 import org.scify.libgdxgame.game.controllers.PlayerController;
 import org.scify.libgdxgame.helpers.GameInfo;
 

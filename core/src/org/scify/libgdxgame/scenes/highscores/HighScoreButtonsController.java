@@ -1,4 +1,4 @@
-package org.scify.libgdxgame.ui;
+package org.scify.libgdxgame.scenes.highscores;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -8,12 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.Align;
 
-import org.scify.libgdxgame.game.GameMain;
+import org.scify.libgdxgame.GameMain;
 import org.scify.libgdxgame.helpers.GameInfo;
+import org.scify.libgdxgame.ui.ButtonProps;
+import org.scify.libgdxgame.ui.ButtonsControllerImpl;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class HighScoreButtonsController extends ButtonsControllerImpl {

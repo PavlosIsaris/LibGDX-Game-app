@@ -12,10 +12,10 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import org.scify.libgdxgame.game.GameMain;
+import org.scify.libgdxgame.GameMain;
 import org.scify.libgdxgame.helpers.GameInfo;
-import org.scify.libgdxgame.scenes.MainMenu;
-import org.scify.libgdxgame.ui.interfaces.ButtonsController;
+import org.scify.libgdxgame.scenes.mainmenu.MainMenu;
+import org.scify.libgdxgame.scenes.interfaces.ButtonsController;
 
 import java.util.ArrayList;
 

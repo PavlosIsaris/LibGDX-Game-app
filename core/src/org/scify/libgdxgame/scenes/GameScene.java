@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import org.scify.libgdxgame.game.GameMain;
+import org.scify.libgdxgame.GameMain;
 import org.scify.libgdxgame.game.controllers.BackgroundsController;
 import org.scify.libgdxgame.helpers.GameInfo;
 import org.scify.libgdxgame.ui.ButtonsControllerImpl;

@@ -1,22 +1,22 @@
-package org.scify.libgdxgame.scenes;
+package org.scify.libgdxgame.scenes.mainmenu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 
-import org.scify.libgdxgame.game.GameMain;
-import org.scify.libgdxgame.ui.HighScoreButtonsController;
+import org.scify.libgdxgame.GameMain;
+import org.scify.libgdxgame.scenes.GameScene;
 
-public class Highscore extends GameScene implements Screen {
+public class MainMenu extends GameScene implements  Screen {
 
-    public Highscore(GameMain game) {
-        super(game, new HighScoreButtonsController(game));
+    public MainMenu(GameMain game) {
+        super(game, new MainMenuButtonsController(game));
     }
 
     @Override
     public void show() {
         initCamera();
-        initResources("Highscore BG.png");
+        initResources("Menu BG.png");
     }
 
     @Override

@@ -1,4 +1,4 @@
-package org.scify.libgdxgame.ui.interfaces;
+package org.scify.libgdxgame.scenes.interfaces;
 
 public interface ButtonsController {
 

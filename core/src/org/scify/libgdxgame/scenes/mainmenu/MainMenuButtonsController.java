@@ -1,4 +1,4 @@
-package org.scify.libgdxgame.ui;
+package org.scify.libgdxgame.scenes.mainmenu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -6,10 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 
-import org.scify.libgdxgame.game.GameMain;
+import org.scify.libgdxgame.GameMain;
 import org.scify.libgdxgame.helpers.GameInfo;
-import org.scify.libgdxgame.scenes.GamePlay;
-import org.scify.libgdxgame.scenes.Highscore;
+import org.scify.libgdxgame.game.GamePlay;
+import org.scify.libgdxgame.scenes.highscores.HighScoreScene;
+import org.scify.libgdxgame.ui.ButtonProps;
+import org.scify.libgdxgame.ui.ButtonsControllerImpl;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -84,7 +86,7 @@ public class MainMenuButtonsController extends ButtonsControllerImpl {
     }
 
     private void highScores() {
-        game.setScreen(new Highscore(game));
+        game.setScreen(new HighScoreScene(game));
     }
 
     private static class ButtonActions {

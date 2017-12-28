@@ -1,10 +1,9 @@
-package org.scify.libgdxgame.game;
+package org.scify.libgdxgame;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import org.scify.libgdxgame.scenes.GamePlay;
-import org.scify.libgdxgame.scenes.MainMenu;
+import org.scify.libgdxgame.scenes.mainmenu.MainMenu;
 
 public class GameMain extends Game {
 
