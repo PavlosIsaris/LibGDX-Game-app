@@ -53,6 +53,6 @@ public class OptionsScene extends GameScene implements Screen {
 
     @Override
     public void dispose() {
-
+        disposeResources();
     }
 }
