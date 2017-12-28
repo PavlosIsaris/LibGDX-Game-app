@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Align;
 import org.scify.libgdxgame.game.GameMain;
 import org.scify.libgdxgame.helpers.GameInfo;
 import org.scify.libgdxgame.scenes.GamePlay;
+import org.scify.libgdxgame.scenes.Highscore;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -69,11 +70,13 @@ public class MainMenuButtonsController extends ButtonsControllerImpl {
             button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    ImageButton pressedBtn = (ImageButton) actor;
                     int actionCode = Integer.parseInt(actor.getName());
                     switch (actionCode) {
                         case ButtonActions.START_GAME:
                             startGame();
+                            break;
+                        case ButtonActions.HIGH_SCORE:
+                            highscores();
                             break;
                     }
 
@@ -84,6 +87,10 @@ public class MainMenuButtonsController extends ButtonsControllerImpl {
 
     private void startGame() {
         game.setScreen(new GamePlay(game));
+    }
+
+    private void highscores() {
+        game.setScreen(new Highscore(game));
     }
 
     public static class ButtonActions {
