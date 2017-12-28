@@ -11,18 +11,19 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import org.scify.libgdxgame.game.GameMain;
 import org.scify.libgdxgame.helpers.GameInfo;
+import org.scify.libgdxgame.ui.interfaces.ButtonsController;
 
 import java.util.ArrayList;
 
 
-public abstract class ButtonsController {
+public abstract class ButtonsControllerImpl implements ButtonsController {
 
     protected Stage stage;
     protected Viewport viewport;
     protected GameMain game;
     protected ArrayList<ImageButton> buttons;
 
-    public ButtonsController(GameMain game) {
+    public ButtonsControllerImpl(GameMain game) {
         this.game = game;
         viewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT,
                 new OrthographicCamera());
@@ -38,10 +39,6 @@ public abstract class ButtonsController {
             stage.addActor(button);
             buttons.add(button);
         }
-    }
-
-    public Stage getStage() {
-        return stage;
     }
 
     public abstract void createButtons();

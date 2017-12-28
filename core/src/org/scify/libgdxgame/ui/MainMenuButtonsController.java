@@ -13,7 +13,7 @@ import org.scify.libgdxgame.scenes.GamePlay;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-public class MainMenuButtonsController extends ButtonsController {
+public class MainMenuButtonsController extends ButtonsControllerImpl {
 
     public MainMenuButtonsController(GameMain game) {
         super(game);
@@ -54,16 +54,17 @@ public class MainMenuButtonsController extends ButtonsController {
 
     @Override
     public void drawButtons() {
-        game.getBatch().setProjectionMatrix(getStage().getCamera().combined);
-        getStage().draw();
+        game.getBatch().setProjectionMatrix(stage.getCamera().combined);
+        stage.draw();
     }
 
     @Override
     public void dispose() {
-        getStage().dispose();
+        stage.dispose();
     }
 
-    private void setButtonListeners() {
+    @Override
+    public void setButtonListeners() {
         for(ImageButton button : buttons) {
             button.addListener(new ChangeListener() {
                 @Override
