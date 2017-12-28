@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import org.scify.libgdxgame.game.GameMain;
 import org.scify.libgdxgame.game.controllers.BackgroundsController;
 import org.scify.libgdxgame.helpers.GameInfo;
+import org.scify.libgdxgame.ui.ButtonsController;
+import org.scify.libgdxgame.ui.MainMenuButtonsController;
 
 public class MainMenu implements  Screen {
 
@@ -17,10 +19,12 @@ public class MainMenu implements  Screen {
     private OrthographicCamera camera;
     private Viewport  viewport;
     private BackgroundsController backgroundsController;
+    private MainMenuButtonsController buttonsController;
 
     public MainMenu(GameMain game) {
         this.game = game;
         backgroundsController = new BackgroundsController();
+        buttonsController = new MainMenuButtonsController(game);
     }
 
     @Override
@@ -34,6 +38,7 @@ public class MainMenu implements  Screen {
             e.printStackTrace();
             dispose();
         }
+        buttonsController.createButtons();
     }
 
     @Override
@@ -44,8 +49,8 @@ public class MainMenu implements  Screen {
         game.getBatch().begin();
 
         backgroundsController.drawBackgrounds(game.getBatch());
-
         game.getBatch().end();
+        buttonsController.drawButtons();
     }
 
     @Override
@@ -71,5 +76,6 @@ public class MainMenu implements  Screen {
     @Override
     public void dispose() {
         backgroundsController.disposeBackgrounds();
+        buttonsController.dispose();
     }
 }
