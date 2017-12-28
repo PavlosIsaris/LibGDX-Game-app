@@ -10,6 +10,7 @@ import org.scify.libgdxgame.GameMain;
 import org.scify.libgdxgame.helpers.GameInfo;
 import org.scify.libgdxgame.game.GamePlay;
 import org.scify.libgdxgame.scenes.highscores.HighScoreScene;
+import org.scify.libgdxgame.scenes.options.OptionsScene;
 import org.scify.libgdxgame.ui.ButtonProps;
 import org.scify.libgdxgame.ui.ButtonsControllerImpl;
 
@@ -74,6 +75,9 @@ public class MainMenuButtonsController extends ButtonsControllerImpl {
                         case ButtonActions.HIGH_SCORE:
                             highScores();
                             break;
+                        case  ButtonActions.OPTIONS:
+                            options();
+                            break;
                     }
 
                 }
@@ -87,6 +91,10 @@ public class MainMenuButtonsController extends ButtonsControllerImpl {
 
     private void highScores() {
         game.setScreen(new HighScoreScene(game));
+    }
+
+    private void options() {
+        game.setScreen(new OptionsScene(game));
     }
 
     private static class ButtonActions {
