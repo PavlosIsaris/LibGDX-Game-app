@@ -35,8 +35,8 @@ public class MainMenuButtonsController extends ButtonsController {
                                 GameInfo.HEIGHT / 2f - 160), Align.center));
         buttonsProps.add(
                 new ButtonProps("Main Menu/Music On.png",
-                        new Point2D.Float(GameInfo.WIDTH  - 13,
-                                13), Align.center));
+                        new Point2D.Float(GameInfo.WIDTH  - 35f,
+                                35f), Align.center));
         createAndPositionButtons(buttonsProps);
     }
 
