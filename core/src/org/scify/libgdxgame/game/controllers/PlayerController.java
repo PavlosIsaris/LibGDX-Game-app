@@ -83,4 +83,8 @@ public class PlayerController {
     public void setPlayerWalking(boolean playerWalking) {
         isPlayerWalking = playerWalking;
     }
+
+    public void disposePlayer() {
+        player.getTexture().dispose();
+    }
 }

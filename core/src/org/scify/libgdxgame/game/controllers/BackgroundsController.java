@@ -13,11 +13,13 @@ public class BackgroundsController {
 
     }
 
-    public void createBackgrounds() {
-        backgrounds = new Sprite[3];
+    public void createBackgrounds(String imgPath, int numOfVerticalBackgrounds) throws Exception {
+        if(numOfVerticalBackgrounds < 0)
+            throw new Exception("num of backgrounds should be > 0");
+        backgrounds = new Sprite[numOfVerticalBackgrounds];
 
         for(int i = 0; i < backgrounds.length; i++) {
-            backgrounds[i] = new Sprite(new Texture("Backgrounds/Game BG.png"));
+            backgrounds[i] = new Sprite(new Texture("Backgrounds/" + imgPath));
             backgrounds[i].setPosition(0, -(i * backgrounds[i].getHeight()));
             lastYPosition = Math.abs(backgrounds[i].getY());
         }
@@ -36,6 +38,12 @@ public class BackgroundsController {
                 background.setPosition(0, -newPosition);
                 lastYPosition = Math.abs(newPosition);
             }
+        }
+    }
+
+    public void disposeBackgrounds() {
+        for(Sprite bg : backgrounds) {
+            bg.getTexture().dispose();
         }
     }
 }

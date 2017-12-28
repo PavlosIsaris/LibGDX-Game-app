@@ -113,7 +113,12 @@ public class GamePlay implements Screen, ContactListener {
 
     @Override
     public void show() {
-        backgroundsController.createBackgrounds();
+        try {
+            backgroundsController.createBackgrounds("Game BG.png", 3);
+        } catch (Exception e) {
+            e.printStackTrace();
+            dispose();
+        }
     }
 
     @Override
@@ -168,7 +173,10 @@ public class GamePlay implements Screen, ContactListener {
 
     @Override
     public void dispose() {
-
+        world.dispose();
+        backgroundsController.disposeBackgrounds();
+        playerController.disposePlayer();
+        debugRenderer.dispose();
     }
 
     @Override
