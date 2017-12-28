@@ -10,7 +10,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import org.scify.libgdxgame.game.GameMain;
 import org.scify.libgdxgame.game.controllers.BackgroundsController;
 import org.scify.libgdxgame.helpers.GameInfo;
-import org.scify.libgdxgame.ui.ButtonsController;
 import org.scify.libgdxgame.ui.MainMenuButtonsController;
 
 public class MainMenu implements  Screen {

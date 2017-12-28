@@ -34,6 +34,7 @@ public abstract class ButtonsController {
         for(ButtonProps buttonProps : buttonsProps) {
             ImageButton button = new ImageButton(new SpriteDrawable(new Sprite( new Texture("Buttons/" + buttonProps.getImgPath()))));
             button.setPosition((float) buttonProps.getPosition().getX(), (float) buttonProps.getPosition().getY(), buttonProps.getAlign());
+            button.setName(String.valueOf(buttonProps.getActionCode()));
             stage.addActor(button);
             buttons.add(button);
         }

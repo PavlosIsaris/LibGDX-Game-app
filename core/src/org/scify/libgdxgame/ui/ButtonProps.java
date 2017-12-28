@@ -6,11 +6,13 @@ public class ButtonProps {
     private String imgPath;
     private Point2D.Float position;
     private int align;
+    private int actionCode;
 
-    public ButtonProps(String imgPath, Point2D.Float position, int align) {
+    public ButtonProps(String imgPath, Point2D.Float position, int align,  int actionCode) {
         this.imgPath = imgPath;
         this.position = position;
         this.align = align;
+        this.actionCode = actionCode;
     }
 
     public String getImgPath() {
@@ -23,5 +25,9 @@ public class ButtonProps {
 
     public int getAlign() {
         return align;
+    }
+
+    public int getActionCode() {
+        return actionCode;
     }
 }
