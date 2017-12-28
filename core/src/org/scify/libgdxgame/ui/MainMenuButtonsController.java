@@ -54,12 +54,6 @@ public class MainMenuButtonsController extends ButtonsControllerImpl {
     }
 
     @Override
-    public void drawButtons() {
-        game.getBatch().setProjectionMatrix(stage.getCamera().combined);
-        stage.draw();
-    }
-
-    @Override
     public void dispose() {
         stage.dispose();
     }
@@ -76,7 +70,7 @@ public class MainMenuButtonsController extends ButtonsControllerImpl {
                             startGame();
                             break;
                         case ButtonActions.HIGH_SCORE:
-                            highscores();
+                            highScores();
                             break;
                     }
 
@@ -89,11 +83,11 @@ public class MainMenuButtonsController extends ButtonsControllerImpl {
         game.setScreen(new GamePlay(game));
     }
 
-    private void highscores() {
+    private void highScores() {
         game.setScreen(new Highscore(game));
     }
 
-    public static class ButtonActions {
+    private static class ButtonActions {
         private static final int START_GAME = 1;
         private static final int HIGH_SCORE = 2;
         private static final int OPTIONS = 3;

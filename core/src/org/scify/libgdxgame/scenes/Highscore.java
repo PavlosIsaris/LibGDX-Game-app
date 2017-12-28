@@ -5,12 +5,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 
 import org.scify.libgdxgame.game.GameMain;
-import org.scify.libgdxgame.ui.HighscoreButtonsController;
+import org.scify.libgdxgame.ui.HighScoreButtonsController;
 
 public class Highscore extends GameScene implements Screen {
 
     public Highscore(GameMain game) {
-        super(game, new HighscoreButtonsController(game));
+        super(game, new HighScoreButtonsController(game));
     }
 
     @Override
@@ -28,11 +28,12 @@ public class Highscore extends GameScene implements Screen {
 
         backgroundsController.drawBackgrounds(game.getBatch());
         game.getBatch().end();
+        buttonsController.drawButtons();
     }
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
     }
 
     @Override
