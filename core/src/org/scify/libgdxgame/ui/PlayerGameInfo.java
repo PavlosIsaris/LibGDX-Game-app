@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -21,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import org.scify.libgdxgame.GameMain;
 import org.scify.libgdxgame.helpers.GameInfo;
+import org.scify.libgdxgame.scenes.mainmenu.MainMenu;
 
 
 public class PlayerGameInfo {
@@ -29,20 +31,26 @@ public class PlayerGameInfo {
     private Stage stage;
     private Viewport viewport;
 
-    private Image coinImg, lifeImg, scoreImg;
+    private WidgetGroup pausePanel;
+    private Image coinImg, lifeImg, scoreImg, pausePanelImg;
     private Label coinLabel, lifeLabel, scoreLabel;
-    private ImageButton pauseBtn;
+    private ImageButton pauseBtn, resumeBtn, quitBtn;
 
     public PlayerGameInfo(GameMain game) {
         this.game = game;
         viewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT,
                 new OrthographicCamera());
         stage = new Stage(viewport, game.getBatch());
-
+        Gdx.input.setInputProcessor(stage);
         createLabels();
         createImages();
         createBtnAndAddListener();
+        createLifeAndScoreInfoTable();
+        createPausePanel();
+        hidePausePanel();
+    }
 
+    private void createLifeAndScoreInfoTable() {
         Table lifeAndCoinTable = new Table();
         lifeAndCoinTable.top().left();
         lifeAndCoinTable.setFillParent(true);
@@ -95,9 +103,50 @@ public class PlayerGameInfo {
         pauseBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //pause the game
+                // pause the game
+                // show the pause panel
+                showPausePanel();
             }
         });
+        stage.addActor(pauseBtn);
+    }
+
+    private void createPausePanel() {
+        pausePanel = new WidgetGroup();
+        pausePanelImg = new Image(new Texture("Pause/Pause Panel.png"));
+        resumeBtn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Pause/Resume.png"))));
+        quitBtn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Pause/Quit 2.png"))));
+
+        pausePanelImg.setPosition(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, Align.center);
+        resumeBtn.setPosition(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f + 50f, Align.center);
+        quitBtn.setPosition(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f - 80f, Align.center);
+
+        resumeBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                hidePausePanel();
+            }
+        });
+
+        quitBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new MainMenu(game));
+            }
+        });
+        pausePanel.addActor(pausePanelImg);
+        pausePanel.addActor(resumeBtn);
+        pausePanel.addActor(quitBtn);
+
+        stage.addActor(pausePanel);
+    }
+
+    private void hidePausePanel() {
+        pausePanel.setVisible(false);
+    }
+
+    private void showPausePanel() {
+        pausePanel.setVisible(true);
     }
 
 }
