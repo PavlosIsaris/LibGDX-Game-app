@@ -21,6 +21,7 @@ import org.scify.libgdxgame.game.controllers.CloudsController;
 import org.scify.libgdxgame.GameMain;
 import org.scify.libgdxgame.game.controllers.PlayerController;
 import org.scify.libgdxgame.helpers.GameInfo;
+import org.scify.libgdxgame.ui.PlayerGameInfo;
 
 import java.awt.geom.Point2D;
 
@@ -37,6 +38,7 @@ public class GamePlay implements Screen, ContactListener {
     private BackgroundsController backgroundsController;
     private CloudsController cloudsController;
     private PlayerController playerController;
+    private PlayerGameInfo playerGameInfo;
 
     public GamePlay(GameMain game) {
         this.game = game;
@@ -44,6 +46,7 @@ public class GamePlay implements Screen, ContactListener {
         cloudsController = new CloudsController(world);
         playerController = new PlayerController(world);
         backgroundsController = new BackgroundsController();
+        playerGameInfo = new PlayerGameInfo(game);
         this.initCamera();
         this.createSprites();
     }
@@ -138,6 +141,8 @@ public class GamePlay implements Screen, ContactListener {
         debugRenderer.render(world, box2DCamera.combined);
         game.getBatch().setProjectionMatrix(mainCamera.combined);
         mainCamera.update();
+        game.getBatch().setProjectionMatrix(playerGameInfo.getStage().getCamera().combined);
+        playerGameInfo.getStage().draw();
         // how many times to calculate physics in a second
         // delta time is the time between 2 frames
         // the second and third parameter defines how many calculations
