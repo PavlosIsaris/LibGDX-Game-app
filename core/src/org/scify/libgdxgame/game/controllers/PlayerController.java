@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
 import org.scify.libgdxgame.game.sprites.DynamicSprite;
+import org.scify.libgdxgame.helpers.GameInfo;
 
 public class PlayerController {
 
@@ -27,6 +28,9 @@ public class PlayerController {
 
     public void createPlayer(float x, float y) {
         this.player = new DynamicSprite(world, "player_1", "Player/Player 1.png", x, y);
+        this.player.createBody(false);
+        this.player.setCategoryBits(GameInfo.PLAYER);
+        this.player.setMaskBits(GameInfo.DEFAULT | GameInfo.COLLECTABLE);
         playerAtlas = new TextureAtlas("Player Animation/Player Animation.atlas");
         // 10 frames per second
         animation = new Animation(1/10f, playerAtlas.getRegions());

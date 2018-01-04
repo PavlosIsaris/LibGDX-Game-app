@@ -17,7 +17,7 @@ public class CloudsController {
     private static final float CLOUD_DEVIATION_DISTANCE = 60;
     private static final float CLOUD_MAXIMUM_DISTANCE_FROM_CENTER = 60;
     private static final float DISTANCE_BETWEEN_CLOUDS_Y = 250f;
-
+    private CollectablesController collectablesController;
     private World world;
     private Array<StaticSprite> clouds = new Array<StaticSprite>();
     // these variables are helpers for randomizing the position of the clouds in the X axis
@@ -26,8 +26,9 @@ public class CloudsController {
     private float cameraY;
 
 
-    public CloudsController(World world) {
+    public CloudsController(World world, CollectablesController collectablesController) {
         this.world = world;
+        this.collectablesController = collectablesController;
         minX = GameInfo.WIDTH / 2f - CLOUD_MAXIMUM_DISTANCE_FROM_CENTER;
         maxX = GameInfo.WIDTH / 2f + CLOUD_MAXIMUM_DISTANCE_FROM_CENTER;
     }
@@ -48,7 +49,7 @@ public class CloudsController {
 
         int index = 1;
         for(int i = 0; i < 6; i ++) {
-            clouds.add(new StaticSprite(world, "cloud_" + i, "Clouds/Cloud " + index + ".png", 0, 0));
+            clouds.add(createCloud(i, index));
             index++;
             if(index == 4)
                 index = 1;
@@ -59,6 +60,13 @@ public class CloudsController {
         while (clouds.get(0).getSpriteId().startsWith("dark_cloud_")) {
             clouds.shuffle();
         }
+    }
+
+    private StaticSprite createCloud(int i, int index) {
+        StaticSprite cloud = new StaticSprite(world, "cloud_" + i, "Clouds/Cloud " + index + ".png", 0, 0);
+        cloud.createBody(false);
+        cloud.setCategoryBits(GameInfo.DEFAULT);
+        return cloud;
     }
 
     private void positionClouds(boolean firstTimeArranging) {
@@ -95,11 +103,18 @@ public class CloudsController {
                 lastCloudPositionY = positionY;
             }
         }
+        collectablesController.createCollectableAtPosition(clouds.get(1).getX(), clouds.get(1).getY() + 80);
     }
 
     public void drawClouds(SpriteBatch batch) {
         for(StaticSprite cloud : clouds) {
             batch.draw(cloud, cloud.getX() - cloud.getWidth() / 2f, cloud.getY() - cloud.getHeight() / 2f);
+        }
+    }
+
+    public void disposeClouds() {
+        for(StaticSprite cloud : clouds) {
+            cloud.getTexture().dispose();
         }
     }
 

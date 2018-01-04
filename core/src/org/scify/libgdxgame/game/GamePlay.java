@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import org.scify.libgdxgame.game.controllers.BackgroundsController;
 import org.scify.libgdxgame.game.controllers.CloudsController;
 import org.scify.libgdxgame.GameMain;
+import org.scify.libgdxgame.game.controllers.CollectablesController;
 import org.scify.libgdxgame.game.controllers.PlayerController;
 import org.scify.libgdxgame.helpers.GameInfo;
 import org.scify.libgdxgame.ui.PlayerGameInfo;
@@ -37,13 +38,15 @@ public class GamePlay implements Screen, ContactListener {
     private Box2DDebugRenderer debugRenderer;
     private BackgroundsController backgroundsController;
     private CloudsController cloudsController;
+    private CollectablesController collectablesController;
     private PlayerController playerController;
     private PlayerGameInfo playerGameInfo;
 
     public GamePlay(GameMain game) {
         this.game = game;
         this.createWorld();
-        cloudsController = new CloudsController(world);
+        collectablesController = new CollectablesController(world);
+        cloudsController = new CloudsController(world, collectablesController);
         playerController = new PlayerController(world);
         backgroundsController = new BackgroundsController();
         playerGameInfo = new PlayerGameInfo(game);
@@ -154,6 +157,7 @@ public class GamePlay implements Screen, ContactListener {
         playerController.drawPlayerIdle(game.getBatch());
         playerController.drawPlayerAnimation(game.getBatch());
         cloudsController.drawClouds(game.getBatch());
+        collectablesController.drawCollectables(game.getBatch());
     }
 
     @Override
@@ -181,6 +185,8 @@ public class GamePlay implements Screen, ContactListener {
         world.dispose();
         backgroundsController.disposeBackgrounds();
         playerController.disposePlayer();
+        cloudsController.disposeClouds();
+        collectablesController.disposeCollectables();
         debugRenderer.dispose();
     }
 
@@ -188,16 +194,23 @@ public class GamePlay implements Screen, ContactListener {
     public void beginContact(Contact contact) {
 
         // first body must be the player
-        Fixture firstBody;
+        Fixture playerBody;
         // second body is the other object that the player collided with
-        Fixture secondBody;
+        Fixture objectBody;
 
         if(contact.getFixtureA().getUserData().equals("player_1")) {
-            firstBody = contact.getFixtureA();
-            secondBody = contact.getFixtureB();
+            playerBody = contact.getFixtureA();
+            objectBody = contact.getFixtureB();
+        } else if(contact.getFixtureB().getUserData().equals("player_1")) {
+            playerBody = contact.getFixtureB();
+            objectBody = contact.getFixtureA();
         } else {
-            firstBody = contact.getFixtureB();
-            secondBody = contact.getFixtureA();
+            return;
+        }
+
+        if(objectBody.getUserData().equals("coin")) {
+            objectBody.setUserData("Remove");
+            collectablesController.removeCollidedCollectables();
         }
     }
 
