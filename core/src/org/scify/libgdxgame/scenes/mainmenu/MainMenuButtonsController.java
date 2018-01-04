@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 
 import org.scify.libgdxgame.GameMain;
+import org.scify.libgdxgame.game.GameManager;
 import org.scify.libgdxgame.helpers.GameInfo;
 import org.scify.libgdxgame.game.GamePlay;
 import org.scify.libgdxgame.scenes.highscores.HighScoreScene;
@@ -86,6 +87,7 @@ public class MainMenuButtonsController extends ButtonsControllerImpl {
     }
 
     private void startGame() {
+        GameManager.getInstance().gameStartedFromMainMenu = true;
         game.setScreen(new GamePlay(game));
     }
 

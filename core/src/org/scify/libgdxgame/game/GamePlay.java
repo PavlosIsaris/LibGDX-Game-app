@@ -41,9 +41,13 @@ public class GamePlay implements Screen, ContactListener {
     private CollectablesController collectablesController;
     private PlayerController playerController;
     private PlayerGameInfo playerGameInfo;
+    private GameManager gameManager;
+    private boolean touchedForTheFirstTime = false;
 
     public GamePlay(GameMain game) {
         this.game = game;
+        // singleton pattern
+        this.gameManager = GameManager.getInstance();
         this.createWorld();
         collectablesController = new CollectablesController(world);
         cloudsController = new CloudsController(world, collectablesController);
@@ -86,18 +90,31 @@ public class GamePlay implements Screen, ContactListener {
         Point2D.Float firstCloudPosition = cloudsController.getCoordsOfFirstCloud();
         playerController.createPlayer((float) firstCloudPosition.getX(), (float) firstCloudPosition.getY() + 100f);
     }
+
+    void checkForFirstTouch() {
+        if(!touchedForTheFirstTime) {
+            if(Gdx.input.justTouched()) {
+                touchedForTheFirstTime = true;
+                gameManager.isPaused = false;
+            }
+        }
+    }
+
     void update(float deltaTime) {
-        moveCamera();
-        // todo refactor using observer pattern
-        backgroundsController.updateBackgrounds(mainCamera.position.y);
-        cloudsController.setCameraY(mainCamera.position.y);
-        cloudsController.createAndArrangeNewClouds();
-        playerController.updatePlayerPosition();
-        collectablesController.removeOffScreenCollectables(mainCamera.position.y);
+        checkForFirstTouch();
+        if(!gameManager.isPaused) {
+            inputHandler(deltaTime);
+            moveCamera();
+            backgroundsController.updateBackgrounds(mainCamera.position.y);
+            cloudsController.setCameraY(mainCamera.position.y);
+            cloudsController.createAndArrangeNewClouds();
+            playerController.updatePlayerPosition();
+            collectablesController.removeOffScreenCollectables(mainCamera.position.y);
+        }
     }
 
     private void moveCamera() {
-        mainCamera.position.y -= 1;
+        mainCamera.position.y -= 1.5;
     }
 
     void inputHandler(float deltaTime) {
@@ -131,7 +148,7 @@ public class GamePlay implements Screen, ContactListener {
     @Override
     public void render(float delta) {
         update(delta);
-        inputHandler(delta);
+
 
         // clear the screen
         Gdx.gl.glClearColor(1, 0, 0, 1);
@@ -213,11 +230,13 @@ public class GamePlay implements Screen, ContactListener {
         if(objectBody.getUserData().equals("coin")) {
             objectBody.setUserData("Remove");
             collectablesController.removeCollidedCollectables();
+            playerGameInfo.incrementCoins();
         }
 
         if(objectBody.getUserData().equals("life")) {
             objectBody.setUserData("Remove");
             collectablesController.removeCollidedCollectables();
+            playerGameInfo.incrementLifes();
         }
     }
 

@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import org.scify.libgdxgame.GameMain;
+import org.scify.libgdxgame.game.GameManager;
 import org.scify.libgdxgame.helpers.GameInfo;
 import org.scify.libgdxgame.scenes.mainmenu.MainMenu;
 
@@ -35,13 +36,21 @@ public class PlayerGameInfo {
     private Image coinImg, lifeImg, scoreImg, pausePanelImg;
     private Label coinLabel, lifeLabel, scoreLabel;
     private ImageButton pauseBtn, resumeBtn, quitBtn;
-
+    private GameManager gameManager;
     public PlayerGameInfo(GameMain game) {
         this.game = game;
         viewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT,
                 new OrthographicCamera());
         stage = new Stage(viewport, game.getBatch());
         Gdx.input.setInputProcessor(stage);
+        gameManager = GameManager.getInstance();
+        if(gameManager.gameStartedFromMainMenu) {
+            // this is the first time starting the game, set initial values
+            gameManager.gameStartedFromMainMenu = false;
+            gameManager.lifeScore = 2;
+            gameManager.coinScore = 0;
+            gameManager.score = 0;
+        }
         createLabels();
         createImages();
         createBtnAndAddListener();
@@ -86,9 +95,9 @@ public class PlayerGameInfo {
         // 40 pixels
         parameter.size = 40;
         BitmapFont font = generator.generateFont(parameter);
-        coinLabel = new Label("x0", new Label.LabelStyle(font, Color.WHITE));
-        lifeLabel = new Label("x2", new Label.LabelStyle(font, Color.WHITE));
-        scoreLabel = new Label("100", new Label.LabelStyle(font, Color.WHITE));
+        coinLabel = new Label("x" + gameManager.coinScore, new Label.LabelStyle(font, Color.WHITE));
+        lifeLabel = new Label("x" + gameManager.lifeScore, new Label.LabelStyle(font, Color.WHITE));
+        scoreLabel = new Label("" + gameManager.score, new Label.LabelStyle(font, Color.WHITE));
     }
 
     private void createImages() {
@@ -104,6 +113,7 @@ public class PlayerGameInfo {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 // pause the game
+                gameManager.isPaused = true;
                 // show the pause panel
                 showPausePanel();
             }
@@ -124,6 +134,7 @@ public class PlayerGameInfo {
         resumeBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                GameManager.getInstance().isPaused = false;
                 hidePausePanel();
             }
         });
@@ -147,6 +158,23 @@ public class PlayerGameInfo {
 
     private void showPausePanel() {
         pausePanel.setVisible(true);
+    }
+
+    public void incrementCoins() {
+        gameManager.coinScore ++;
+        coinLabel.setText("x" + gameManager.coinScore);
+        incrementScore(100);
+    }
+
+    public void incrementLifes() {
+        gameManager.lifeScore++;
+        lifeLabel.setText("x" + gameManager.lifeScore);
+        incrementScore(200);
+    }
+
+    public void incrementScore(int score) {
+        gameManager.score += score;
+        scoreLabel.setText(String.valueOf(gameManager.score));
     }
 
 }
