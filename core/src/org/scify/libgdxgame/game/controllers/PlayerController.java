@@ -69,11 +69,11 @@ public class PlayerController {
     }
 
     public void movePlayerUP() {
-        player.moveSpriteOnYAxis(-PLAYER_MOVING_VELOCITY);
+        player.moveSpriteOnYAxis(PLAYER_MOVING_VELOCITY);
     }
 
     public void movePlayerDOWN() {
-        player.moveSpriteOnYAxis(PLAYER_MOVING_VELOCITY);
+        player.moveSpriteOnYAxis(-PLAYER_MOVING_VELOCITY);
     }
 
     public void movePlayerLEFT() {
