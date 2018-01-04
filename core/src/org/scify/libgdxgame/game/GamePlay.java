@@ -87,7 +87,7 @@ public class GamePlay implements Screen, ContactListener {
         playerController.createPlayer((float) firstCloudPosition.getX(), (float) firstCloudPosition.getY() + 100f);
     }
     void update(float deltaTime) {
-        //moveCamera();
+        moveCamera();
         // todo refactor using observer pattern
         backgroundsController.updateBackgrounds(mainCamera.position.y);
         cloudsController.setCameraY(mainCamera.position.y);
@@ -142,10 +142,11 @@ public class GamePlay implements Screen, ContactListener {
         game.getBatch().end();
 
         debugRenderer.render(world, box2DCamera.combined);
-        game.getBatch().setProjectionMatrix(mainCamera.combined);
-        mainCamera.update();
+
         game.getBatch().setProjectionMatrix(playerGameInfo.getStage().getCamera().combined);
         playerGameInfo.getStage().draw();
+        game.getBatch().setProjectionMatrix(mainCamera.combined);
+        mainCamera.update();
         // how many times to calculate physics in a second
         // delta time is the time between 2 frames
         // the second and third parameter defines how many calculations
@@ -209,6 +210,11 @@ public class GamePlay implements Screen, ContactListener {
         }
 
         if(objectBody.getUserData().equals("coin")) {
+            objectBody.setUserData("Remove");
+            collectablesController.removeCollidedCollectables();
+        }
+
+        if(objectBody.getUserData().equals("life")) {
             objectBody.setUserData("Remove");
             collectablesController.removeCollidedCollectables();
         }

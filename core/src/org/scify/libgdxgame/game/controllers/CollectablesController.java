@@ -16,8 +16,16 @@ public class CollectablesController {
         this.world = world;
     }
 
-    public void createCollectableAtPosition(float x, float y) {
-        StaticSprite collectable = new StaticSprite(world, "coin", "Collectables/Coin.png", x, y);
+    public void createCoinAtPosition(float x, float y) {
+        this.createCollectableAtPosition("coin", "Collectables/Coin.png", x, y);
+    }
+
+    public void createLifeAtPosition(float x, float y) {
+        this.createCollectableAtPosition("life", "Collectables/Life.png", x, y);
+    }
+
+    private void createCollectableAtPosition(String id, String imgPath, float x, float y) {
+        StaticSprite collectable = new StaticSprite(world, id, imgPath, x, y);
         collectable.createBody(true);
         collectable.setCategoryBits(GameInfo.COLLECTABLE);
         collectables.add(collectable);

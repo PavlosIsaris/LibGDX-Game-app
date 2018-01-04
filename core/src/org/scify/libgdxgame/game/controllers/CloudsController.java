@@ -14,8 +14,8 @@ import java.awt.geom.Point2D;
 public class CloudsController {
     private static final float CLOUD_INITIAL_POSITION_X = 0;
     private static final float CLOUD_INITIAL_POSITION_Y = 0;
-    private static final float CLOUD_DEVIATION_DISTANCE = 60;
-    private static final float CLOUD_MAXIMUM_DISTANCE_FROM_CENTER = 60;
+    private static final float CLOUD_DEVIATION_DISTANCE = 100;
+    private static final float CLOUD_MAXIMUM_DISTANCE_FROM_CENTER = 150;
     private static final float DISTANCE_BETWEEN_CLOUDS_Y = 250f;
     private CollectablesController collectablesController;
     private World world;
@@ -102,8 +102,24 @@ public class CloudsController {
                 positionY -= DISTANCE_BETWEEN_CLOUDS_Y;
                 lastCloudPositionY = positionY;
             }
+            if(!firstTimeArranging && !cloud.getSpriteId().startsWith("dark_cloud_")) {
+                this.createCollectableRandom(cloud.getX(), cloud.getY());
+            }
         }
-        collectablesController.createCollectableAtPosition(clouds.get(1).getX(), clouds.get(1).getY() + 80);
+
+    }
+
+    private void createCollectableRandom(float x, float y) {
+        int rand = (int) Utils.randomBetweenNumbers(0, 10);
+        if(rand > 5) {
+            // we either want to spawn a life or a coin collectables.
+            int randomCollectable = (int) Utils.randomBetweenNumbers(0, 2);
+            if(randomCollectable == 0) {
+                this.collectablesController.createLifeAtPosition(x, y + 80);
+            } else {
+                this.collectablesController.createCoinAtPosition(x, y + 80);
+            }
+        }
     }
 
     public void drawClouds(SpriteBatch batch) {
