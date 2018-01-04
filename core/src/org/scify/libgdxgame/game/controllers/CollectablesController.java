@@ -49,6 +49,17 @@ public class CollectablesController {
         }
     }
 
+    public void removeOffScreenCollectables(float cameraY) {
+        int index = 0;
+        for(StaticSprite collectable : collectables) {
+            if((collectable.getY() - GameInfo.HEIGHT / 2f - 15) > cameraY) {
+                collectable.getTexture().dispose();
+                collectables.removeIndex(index);
+            }
+            index++;
+        }
+    }
+
     public void disposeCollectables() {
         for(StaticSprite collectable : collectables) {
             collectable.getTexture().dispose();

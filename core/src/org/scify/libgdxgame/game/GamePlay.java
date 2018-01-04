@@ -93,6 +93,7 @@ public class GamePlay implements Screen, ContactListener {
         cloudsController.setCameraY(mainCamera.position.y);
         cloudsController.createAndArrangeNewClouds();
         playerController.updatePlayerPosition();
+        collectablesController.removeOffScreenCollectables(mainCamera.position.y);
     }
 
     private void moveCamera() {
