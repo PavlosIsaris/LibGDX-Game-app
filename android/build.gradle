@@ -1,6 +1,6 @@
 android {
-    buildToolsVersion "27.0.2"
-    compileSdkVersion 26
+    buildToolsVersion "28.0.3"
+    compileSdkVersion 28
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -12,7 +12,7 @@ android {
             jniLibs.srcDirs = ['libs']
         }
 
-        instrumentTest.setRoot('tests')
+        androidTest.setRoot('tests')
     }
     packagingOptions {
         exclude 'META-INF/robovm/ios/robovm.xml'
@@ -20,7 +20,7 @@ android {
     defaultConfig {
         applicationId "org.scify.libgdxgame"
         minSdkVersion 9
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
